@@ -1,125 +1,203 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, AlertCircle } from 'lucide-react';
-import { useAdmin } from '../../context/AdminContext';
+import React from 'react';
+import { TrendingUp, DollarSign, ShoppingBag, Users, Calendar, Package } from 'lucide-react';
+import { mockOrders } from '../../data/orders';
+import { mockClients } from '../../data/clients';
+import { products } from '../../data/products';
 
-const AdminLogin: React.FC = () => {
-  const navigate = useNavigate();
-  const { adminLogin } = useAdmin();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-  const [error, setError] = useState('');
+const Analytics: React.FC = () => {
+  // Mock analytics data calculations
+  const totalItemsSold = mockOrders.reduce((sum, order) => 
+    sum + order.items.reduce((itemSum, item) => itemSum + item.weight, 0), 0
+  ) / 1000; // Convert to kg
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-    setError('');
-  };
+  // Mock monthly data for charts
+  const monthlyData = [
+    { month: 'Jan', orders: 45 },
+    { month: 'Feb', orders: 52 },
+    { month: 'Mar', orders: 48 },
+    { month: 'Apr', orders: 61 },
+    { month: 'May', orders: 58 },
+    { month: 'Jun', orders: 65 }
+  ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    const success = adminLogin(formData.email, formData.password);
-    if (success) {
-      navigate('/admin/dashboard');
-    } else {
-      setError('Invalid credentials. Use admin@fruitveg.com / admin123');
-    }
-  };
+  const topProducts = [
+    { name: 'Fresh Tomatoes', sold: '245kg' },
+    { name: 'Fresh Apples', sold: '189kg' },
+    { name: 'Fresh Carrots', sold: '167kg' },
+    { name: 'Green Lettuce', sold: '134kg' },
+    { name: 'Fresh Potatoes', sold: '298kg' }
+  ];
+
+  const topClients = mockClients
+    .sort((a, b) => b.totalOrders - a.totalOrders)
+    .slice(0, 5);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <div className="flex items-center justify-center space-x-2 mb-6">
-            <img src="/image.png" alt="Logo" className="h-12 w-12" />
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
+        <p className="text-gray-600 mt-1">
+          Insights and performance metrics for your business
+        </p>
+      </div>
+
+      {/* Key Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
             <div>
-              <div className="text-2xl font-bold text-white">Ahmedabad Vegetable & Fruit</div>
-              <div className="text-sm text-gray-300">Admin Panel</div>
+              <p className="text-sm text-gray-600">Total Orders</p>
+              <p className="text-2xl font-bold text-green-600">{mockOrders.length}</p>
+              <p className="text-xs text-green-600 mt-1">+12.5% vs last month</p>
+            </div>
+            <div className="p-3 bg-green-100 rounded-lg">
+              <ShoppingBag className="h-6 w-6 text-green-600" />
             </div>
           </div>
-          <h2 className="text-3xl font-bold text-white">
-            Admin Access
-          </h2>
-          <p className="mt-2 text-gray-300">
-            Sign in to access the administrative dashboard
-          </p>
         </div>
 
-        <div className="bg-white py-8 px-6 shadow-2xl rounded-lg">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center space-x-2">
-                <AlertCircle className="h-5 w-5 text-red-600" />
-                <p className="text-red-700 text-sm">{error}</p>
-              </div>
-            )}
-
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Admin Email
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="pl-10 w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                  placeholder="admin@fruitveg.com"
-                />
-              </div>
+              <p className="text-sm text-gray-600">Active Clients</p>
+              <p className="text-2xl font-bold text-blue-600">{mockClients.length}</p>
+              <p className="text-xs text-blue-600 mt-1">+8.2% vs last month</p>
             </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className="pl-10 w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                  placeholder="admin123"
-                />
-              </div>
+            <div className="p-3 bg-blue-100 rounded-lg">
+              <Users className="h-6 w-6 text-blue-600" />
             </div>
-
-            <button
-              type="submit"
-              className="w-full bg-gray-900 text-white py-3 px-4 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-200 font-medium"
-            >
-              Sign In to Admin Panel
-            </button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500 mb-2">Demo Credentials:</p>
-            <p className="text-xs text-gray-600">
-              Email: admin@ahmedabadvegetable.com<br />
-              Password: admin123
-            </p>
           </div>
+        </div>
 
-          <div className="mt-6 text-center">
-            <Link
-              to="/login"
-              className="text-sm text-green-600 hover:text-green-700"
-            >
-              ← Back to Customer Login
-            </Link>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Products Available</p>
+              <p className="text-2xl font-bold text-purple-600">{products.length}</p>
+              <p className="text-xs text-purple-600 mt-1">+3.8% vs last month</p>
+            </div>
+            <div className="p-3 bg-purple-100 rounded-lg">
+              <Package className="h-6 w-6 text-purple-600" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Items Sold</p>
+              <p className="text-2xl font-bold text-orange-600">{totalItemsSold.toFixed(0)}kg</p>
+              <p className="text-xs text-orange-600 mt-1">+15.3% vs last month</p>
+            </div>
+            <div className="p-3 bg-orange-100 rounded-lg">
+              <Package className="h-6 w-6 text-orange-600" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Monthly Orders Chart (Mock) */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Monthly Orders Trend</h2>
+          <div className="space-y-4">
+            {monthlyData.map((data, index) => (
+              <div key={data.month} className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 text-sm font-medium text-gray-600">{data.month}</div>
+                  <div className="flex-1">
+                    <div className="bg-gray-200 rounded-full h-4 w-32">
+                      <div
+                        className="bg-green-600 h-4 rounded-full transition-all duration-500"
+                        style={{ width: `${(data.orders / 70) * 100}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-gray-900">£{data.revenue.toFixed(2)}</div>
+                  <div className="text-sm text-gray-600">{data.orders} orders</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Top Products */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Top Selling Products</h2>
+          <div className="space-y-4">
+            {topProducts.map((product, index) => (
+              <div key={product.name} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-green-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <div className="font-medium text-gray-900">{product.name}</div>
+                    <div className="text-sm text-gray-600">{product.sold} sold</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-gray-900">{product.revenue}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Top Clients */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Top Clients</h2>
+          <div className="space-y-4">
+            {topClients.map((client, index) => (
+              <div key={client.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-blue-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <div className="font-medium text-gray-900">{client.companyName}</div>
+                    <div className="text-sm text-gray-600">{client.email}</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-gray-900">{client.totalOrders} orders</div>
+                  <div className="text-sm text-gray-600">
+                    Since {new Date(client.registrationDate).toLocaleDateString('en-GB')}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Category Performance */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Category Performance</h2>
+          <div className="space-y-4">
+            {['Fruits', 'Vegetables', 'English Vegetables'].map((category, index) => {
+              const categoryProducts = products.filter(p => p.category === category);
+              const percentage = (categoryProducts.length / products.length) * 100;
+              
+              return (
+                <div key={category} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium text-gray-900">{category}</span>
+                    <span className="text-sm text-gray-600">{categoryProducts.length} products</span>
+                  </div>
+                  <div className="bg-gray-200 rounded-full h-3">
+                    <div
+                      className="bg-gradient-to-r from-green-500 to-blue-600 h-3 rounded-full transition-all duration-500"
+                      style={{ width: `${percentage}%` }}
+                    ></div>
+                  </div>
+                  <div className="text-xs text-gray-500">{percentage.toFixed(1)}% of total inventory</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -127,4 +205,4 @@ const AdminLogin: React.FC = () => {
   );
 };
 
-export default AdminLogin;
+export default Analytics;

@@ -1,114 +1,208 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  Package, 
-  Users, 
-  ShoppingBag, 
-  Bell, 
-  BarChart3,
-  LogOut,
-} from 'lucide-react';
-import { useAdmin } from '../../context/AdminContext';
+import { TrendingUp, DollarSign, ShoppingBag, Users, Calendar, Package } from 'lucide-react';
+import { mockOrders } from '../../data/orders';
+import { mockClients } from '../../data/clients';
+import { products } from '../../data/products';
 
-const AdminSidebar: React.FC = () => {
-  const location = useLocation();
-  const { adminLogout, newOrdersCount } = useAdmin();
+const Analytics: React.FC = () => {
+  // Mock analytics data calculations
+  const totalItemsSold = mockOrders.reduce((sum, order) => 
+    sum + order.items.reduce((itemSum, item) => itemSum + item.weight, 0), 0
+  ) / 1000; // Convert to kg
 
-  const menuItems = [
-    {
-      path: '/admin/dashboard',
-      icon: LayoutDashboard,
-      label: 'Dashboard',
-      badge: newOrdersCount > 0 ? newOrdersCount : null
-    },
-    {
-      path: '/admin/orders',
-      icon: ShoppingBag,
-      label: 'Orders',
-      badge: newOrdersCount > 0 ? newOrdersCount : null
-    },
-    {
-      path: '/admin/inventory',
-      icon: Package,
-      label: 'Inventory'
-    },
-    {
-      path: '/admin/clients',
-      icon: Users,
-      label: 'Clients'
-    },
-    {
-      path: '/admin/notifications',
-      icon: Bell,
-      label: 'Notifications',
-      badge: newOrdersCount > 0 ? newOrdersCount : null
-    },
-    {
-      path: '/admin/analytics',
-      icon: BarChart3,
-      label: 'Analytics'
-    }
+  // Mock monthly data for charts
+  const monthlyData = [
+    { month: 'Jan', orders: 45 },
+    { month: 'Feb', orders: 52 },
+    { month: 'Mar', orders: 48 },
+    { month: 'Apr', orders: 61 },
+    { month: 'May', orders: 58 },
+    { month: 'Jun', orders: 65 }
   ];
 
+  const topProducts = [
+    { name: 'Fresh Tomatoes', sold: '245kg' },
+    { name: 'Fresh Apples', sold: '189kg' },
+    { name: 'Fresh Carrots', sold: '167kg' },
+    { name: 'Green Lettuce', sold: '134kg' },
+    { name: 'Fresh Potatoes', sold: '298kg' }
+  ];
+
+  const topClients = mockClients
+    .sort((a, b) => b.totalOrders - a.totalOrders)
+    .slice(0, 5);
+
   return (
-    <div className="w-64 bg-gray-900 text-white min-h-screen">
-      {/* Logo */}
-      <div className="p-6 border-b border-gray-700">
-        <div className="flex items-center space-x-2">
-          <img src="/image.png" alt="Logo" className="h-8 w-8" />
-          <div>
-            <div className="font-bold text-lg">Ahmedabad Vegetable & Fruit</div>
-            <div className="text-sm text-gray-400">Admin Panel</div>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
+        <p className="text-gray-600 mt-1">
+          Insights and performance metrics for your business
+        </p>
+      </div>
+
+      {/* Key Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Total Orders</p>
+              <p className="text-2xl font-bold text-green-600">{mockOrders.length}</p>
+              <p className="text-xs text-green-600 mt-1">+12.5% vs last month</p>
+            </div>
+            <div className="p-3 bg-green-100 rounded-lg">
+              <ShoppingBag className="h-6 w-6 text-green-600" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Active Clients</p>
+              <p className="text-2xl font-bold text-blue-600">{mockClients.length}</p>
+              <p className="text-xs text-blue-600 mt-1">+8.2% vs last month</p>
+            </div>
+            <div className="p-3 bg-blue-100 rounded-lg">
+              <Users className="h-6 w-6 text-blue-600" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Products Available</p>
+              <p className="text-2xl font-bold text-purple-600">{products.length}</p>
+              <p className="text-xs text-purple-600 mt-1">+3.8% vs last month</p>
+            </div>
+            <div className="p-3 bg-purple-100 rounded-lg">
+              <Package className="h-6 w-6 text-purple-600" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Items Sold</p>
+              <p className="text-2xl font-bold text-orange-600">{totalItemsSold.toFixed(0)}kg</p>
+              <p className="text-xs text-orange-600 mt-1">+15.3% vs last month</p>
+            </div>
+            <div className="p-3 bg-orange-100 rounded-lg">
+              <Package className="h-6 w-6 text-orange-600" />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="mt-6">
-        <ul className="space-y-2 px-4">
-          {menuItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-            
-            return (
-              <li key={item.path}>
-                <Link
-                  to={item.path}
-                  className={`flex items-center justify-between px-4 py-3 rounded-lg transition-colors duration-200 ${
-                    isActive
-                      ? 'bg-green-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
-                >
-                  <div className="flex items-center space-x-3">
-                    <Icon className="h-5 w-5" />
-                    <span>{item.label}</span>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Monthly Orders Chart (Mock) */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Monthly Orders Trend</h2>
+          <div className="space-y-4">
+            {monthlyData.map((data, index) => (
+              <div key={data.month} className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 text-sm font-medium text-gray-600">{data.month}</div>
+                  <div className="flex-1">
+                    <div className="bg-gray-200 rounded-full h-4 w-32">
+                      <div
+                        className="bg-green-600 h-4 rounded-full transition-all duration-500"
+                        style={{ width: `${(data.orders / 70) * 100}%` }}
+                      ></div>
+                    </div>
                   </div>
-                  {item.badge && (
-                    <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-gray-900">£{data.revenue.toFixed(2)}</div>
+                  <div className="text-sm text-gray-600">{data.orders} orders</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
-      {/* Logout */}
-      <div className="absolute bottom-6 left-4 right-4">
-        <button
-          onClick={adminLogout}
-          className="w-full flex items-center space-x-3 px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors duration-200"
-        >
-          <LogOut className="h-5 w-5" />
-          <span>Logout</span>
-        </button>
+        {/* Top Products */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Top Selling Products</h2>
+          <div className="space-y-4">
+            {topProducts.map((product, index) => (
+              <div key={product.name} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-green-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <div className="font-medium text-gray-900">{product.name}</div>
+                    <div className="text-sm text-gray-600">{product.sold} sold</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-gray-900">{product.revenue}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Top Clients */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Top Clients</h2>
+          <div className="space-y-4">
+            {topClients.map((client, index) => (
+              <div key={client.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-blue-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <div className="font-medium text-gray-900">{client.companyName}</div>
+                    <div className="text-sm text-gray-600">{client.email}</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-gray-900">{client.totalOrders} orders</div>
+                  <div className="text-sm text-gray-600">
+                    Since {new Date(client.registrationDate).toLocaleDateString('en-GB')}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Category Performance */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Category Performance</h2>
+          <div className="space-y-4">
+            {['Fruits', 'Vegetables', 'English Vegetables'].map((category, index) => {
+              const categoryProducts = products.filter(p => p.category === category);
+              const percentage = (categoryProducts.length / products.length) * 100;
+              
+              return (
+                <div key={category} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium text-gray-900">{category}</span>
+                    <span className="text-sm text-gray-600">{categoryProducts.length} products</span>
+                  </div>
+                  <div className="bg-gray-200 rounded-full h-3">
+                    <div
+                      className="bg-gradient-to-r from-green-500 to-blue-600 h-3 rounded-full transition-all duration-500"
+                      style={{ width: `${percentage}%` }}
+                    ></div>
+                  </div>
+                  <div className="text-xs text-gray-500">{percentage.toFixed(1)}% of total inventory</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default AdminSidebar;
+export default Analytics;

@@ -1,136 +1,208 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
-import { useUser } from '../../context/UserContext';
+import { TrendingUp, DollarSign, ShoppingBag, Users, Calendar, Package } from 'lucide-react';
+import { mockOrders } from '../../data/orders';
+import { mockClients } from '../../data/clients';
+import { products } from '../../data/products';
 
-const Header: React.FC = () => {
-  const location = useLocation();
-  const { getCartItemsCount } = useCart();
-  const { user, isAuthenticated, logout } = useUser();
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  
-  const cartItemsCount = getCartItemsCount();
-  const isAdminRoute = location.pathname.startsWith('/admin');
+const Analytics: React.FC = () => {
+  // Mock analytics data calculations
+  const totalItemsSold = mockOrders.reduce((sum, order) => 
+    sum + order.items.reduce((itemSum, item) => itemSum + item.weight, 0), 0
+  ) / 1000; // Convert to kg
 
-  if (isAdminRoute) return null; // Don't show header on admin routes
+  // Mock monthly data for charts
+  const monthlyData = [
+    { month: 'Jan', orders: 45 },
+    { month: 'Feb', orders: 52 },
+    { month: 'Mar', orders: 48 },
+    { month: 'Apr', orders: 61 },
+    { month: 'May', orders: 58 },
+    { month: 'Jun', orders: 65 }
+  ];
+
+  const topProducts = [
+    { name: 'Fresh Tomatoes', sold: '245kg' },
+    { name: 'Fresh Apples', sold: '189kg' },
+    { name: 'Fresh Carrots', sold: '167kg' },
+    { name: 'Green Lettuce', sold: '134kg' },
+    { name: 'Fresh Potatoes', sold: '298kg' }
+  ];
+
+  const topClients = mockClients
+    .sort((a, b) => b.totalOrders - a.totalOrders)
+    .slice(0, 5);
 
   return (
-    <header className="bg-white shadow-lg border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <img src="/image.png" alt="Logo" className="h-10 w-10" />
-            <span className="text-xl font-bold text-gray-900">Ahmedabad Vegetable & Fruit</span>
-          </Link>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
+        <p className="text-gray-600 mt-1">
+          Insights and performance metrics for your business
+        </p>
+      </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              to="/"
-              className="text-gray-700 hover:text-green-600 transition-colors duration-200 font-medium"
-            >
-              Home
-            </Link>
-            {isAuthenticated && (
-              <>
-                <Link
-                  to="/cart"
-                  className="relative flex items-center text-gray-700 hover:text-green-600 transition-colors duration-200"
-                >
-                  <ShoppingCart className="h-5 w-5 mr-1" />
-                  Cart
-                  {cartItemsCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {cartItemsCount}
-                    </span>
-                  )}
-                </Link>
-                <div className="flex items-center space-x-2 text-gray-700">
-                  <User className="h-5 w-5" />
-                  <span className="text-sm">{user?.companyName}</span>
-                  <button
-                    onClick={logout}
-                    className="text-sm text-red-600 hover:text-red-700 ml-2"
-                  >
-                    Logout
-                  </button>
-                </div>
-              </>
-            )}
-            {!isAuthenticated && (
-              <Link
-                to="/login"
-                className="flex items-center text-gray-700 hover:text-green-600 transition-colors duration-200"
-              >
-                <User className="h-5 w-5 mr-1" />
-                Login
-              </Link>
-            )}
-          </nav>
-
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-gray-600 hover:text-green-600"
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+      {/* Key Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Total Orders</p>
+              <p className="text-2xl font-bold text-green-600">{mockOrders.length}</p>
+              <p className="text-xs text-green-600 mt-1">+12.5% vs last month</p>
+            </div>
+            <div className="p-3 bg-green-100 rounded-lg">
+              <ShoppingBag className="h-6 w-6 text-green-600" />
+            </div>
+          </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
-            <nav className="flex flex-col space-y-3">
-              <Link
-                to="/"
-                className="text-gray-700 hover:text-green-600 transition-colors duration-200 font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
-              {isAuthenticated && (
-                <>
-                  <Link
-                    to="/cart"
-                    className="flex items-center text-gray-700 hover:text-green-600 transition-colors duration-200"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <ShoppingCart className="h-5 w-5 mr-2" />
-                    Cart ({cartItemsCount})
-                  </Link>
-                  <div className="flex items-center text-gray-700 py-2 border-t border-gray-100">
-                    <User className="h-5 w-5 mr-2" />
-                    <span className="text-sm">{user?.companyName}</span>
-                  </div>
-                  <button
-                    onClick={() => {
-                      logout();
-                      setIsMenuOpen(false);
-                    }}
-                    className="text-left text-red-600 hover:text-red-700"
-                  >
-                    Logout
-                  </button>
-                </>
-              )}
-              {!isAuthenticated && (
-                <Link
-                  to="/login"
-                  className="flex items-center text-gray-700 hover:text-green-600 transition-colors duration-200"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <User className="h-5 w-5 mr-2" />
-                  Login
-                </Link>
-              )}
-            </nav>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Active Clients</p>
+              <p className="text-2xl font-bold text-blue-600">{mockClients.length}</p>
+              <p className="text-xs text-blue-600 mt-1">+8.2% vs last month</p>
+            </div>
+            <div className="p-3 bg-blue-100 rounded-lg">
+              <Users className="h-6 w-6 text-blue-600" />
+            </div>
           </div>
-        )}
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Products Available</p>
+              <p className="text-2xl font-bold text-purple-600">{products.length}</p>
+              <p className="text-xs text-purple-600 mt-1">+3.8% vs last month</p>
+            </div>
+            <div className="p-3 bg-purple-100 rounded-lg">
+              <Package className="h-6 w-6 text-purple-600" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Items Sold</p>
+              <p className="text-2xl font-bold text-orange-600">{totalItemsSold.toFixed(0)}kg</p>
+              <p className="text-xs text-orange-600 mt-1">+15.3% vs last month</p>
+            </div>
+            <div className="p-3 bg-orange-100 rounded-lg">
+              <Package className="h-6 w-6 text-orange-600" />
+            </div>
+          </div>
+        </div>
       </div>
-    </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Monthly Orders Chart (Mock) */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Monthly Orders Trend</h2>
+          <div className="space-y-4">
+            {monthlyData.map((data, index) => (
+              <div key={data.month} className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 text-sm font-medium text-gray-600">{data.month}</div>
+                  <div className="flex-1">
+                    <div className="bg-gray-200 rounded-full h-4 w-32">
+                      <div
+                        className="bg-green-600 h-4 rounded-full transition-all duration-500"
+                        style={{ width: `${(data.orders / 70) * 100}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-gray-900">£{data.revenue.toFixed(2)}</div>
+                  <div className="text-sm text-gray-600">{data.orders} orders</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Top Products */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Top Selling Products</h2>
+          <div className="space-y-4">
+            {topProducts.map((product, index) => (
+              <div key={product.name} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-green-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <div className="font-medium text-gray-900">{product.name}</div>
+                    <div className="text-sm text-gray-600">{product.sold} sold</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-gray-900">{product.revenue}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Top Clients */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Top Clients</h2>
+          <div className="space-y-4">
+            {topClients.map((client, index) => (
+              <div key={client.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-blue-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <div className="font-medium text-gray-900">{client.companyName}</div>
+                    <div className="text-sm text-gray-600">{client.email}</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-gray-900">{client.totalOrders} orders</div>
+                  <div className="text-sm text-gray-600">
+                    Since {new Date(client.registrationDate).toLocaleDateString('en-GB')}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Category Performance */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Category Performance</h2>
+          <div className="space-y-4">
+            {['Fruits', 'Vegetables', 'English Vegetables'].map((category, index) => {
+              const categoryProducts = products.filter(p => p.category === category);
+              const percentage = (categoryProducts.length / products.length) * 100;
+              
+              return (
+                <div key={category} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium text-gray-900">{category}</span>
+                    <span className="text-sm text-gray-600">{categoryProducts.length} products</span>
+                  </div>
+                  <div className="bg-gray-200 rounded-full h-3">
+                    <div
+                      className="bg-gradient-to-r from-green-500 to-blue-600 h-3 rounded-full transition-all duration-500"
+                      style={{ width: `${percentage}%` }}
+                    ></div>
+                  </div>
+                  <div className="text-xs text-gray-500">{percentage.toFixed(1)}% of total inventory</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Header;
+export default Analytics;
