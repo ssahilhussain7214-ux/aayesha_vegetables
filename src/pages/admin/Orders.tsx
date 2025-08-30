@@ -142,7 +142,7 @@ const Orders: React.FC = () => {
                     <OrderStatusBadge status={order.status} />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                    £{order.totalAmount.toFixed(2)}
+                    {order.items.length} items
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <Link

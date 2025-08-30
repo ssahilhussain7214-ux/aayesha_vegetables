@@ -101,12 +101,6 @@ const ProductDetails: React.FC = () => {
               {product.description}
             </p>
 
-            <div className="mb-6">
-              <div className="text-3xl font-bold text-green-600 mb-2">
-                £{product.pricePerKg.toFixed(2)}/kg
-              </div>
-            </div>
-
             {/* Weight Selector */}
             <div className="mb-8">
               <label className="block text-lg font-semibold text-gray-900 mb-4">
@@ -142,12 +136,6 @@ const ProductDetails: React.FC = () => {
                 </button>
               </div>
 
-              <div className="text-right">
-                <div className="text-sm text-gray-600">Total Price</div>
-                <div className="text-2xl font-bold text-green-600">
-                  £{totalPrice.toFixed(2)}
-                </div>
-              </div>
             </div>
 
             {/* Add to Cart Button */}

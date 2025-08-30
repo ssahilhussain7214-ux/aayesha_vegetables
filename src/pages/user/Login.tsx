@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Leaf, Mail, Phone, Building, Key } from 'lucide-react';
+import { Mail, Phone, Building, Key } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
 
 const Login: React.FC = () => {
@@ -49,8 +49,8 @@ const Login: React.FC = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <Link to="/" className="flex items-center justify-center space-x-2 mb-6">
-            <Leaf className="h-12 w-12 text-green-600" />
-            <span className="text-2xl font-bold text-gray-900">FreshVeg Co.</span>
+            <img src="/image.png" alt="Logo" className="h-12 w-12" />
+            <span className="text-2xl font-bold text-gray-900">Ahmedabad Vegetable & Fruit</span>
           </Link>
           <h2 className="text-3xl font-bold text-gray-900">
             {isLogin ? 'Sign in to your account' : 'Create your account'}

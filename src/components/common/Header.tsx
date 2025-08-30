@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, User, Leaf, Menu, X } from 'lucide-react';
+import { ShoppingCart, User, Menu, X } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useUser } from '../../context/UserContext';
 
@@ -21,8 +21,8 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <Leaf className="h-8 w-8 text-green-600" />
-            <span className="text-xl font-bold text-gray-900">FreshVeg Co.</span>
+            <img src="/image.png" alt="Logo" className="h-10 w-10" />
+            <span className="text-xl font-bold text-gray-900">Ahmedabad Vegetable & Fruit</span>
           </Link>
 
           {/* Desktop Navigation */}

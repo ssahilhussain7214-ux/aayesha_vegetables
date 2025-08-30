@@ -83,9 +83,6 @@ const OrderDetails: React.FC = () => {
               <OrderStatusBadge status={order.status} />
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="text-2xl font-bold text-green-600 mb-2">
-                £{order.totalAmount.toFixed(2)}
-              </div>
               <div className="text-sm text-gray-600">
                 {order.items.length} items • Total weight: {order.items.reduce((sum, item) => sum + item.weight, 0)}g
               </div>
@@ -104,12 +101,7 @@ const OrderDetails: React.FC = () => {
                   <div className="flex-1">
                     <div className="font-medium text-gray-900">{item.productName}</div>
                     <div className="text-sm text-gray-600">
-                      {item.weight}g × £{item.pricePerKg.toFixed(2)}/kg
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-semibold text-gray-900">
-                      £{item.total.toFixed(2)}
+                      {item.weight}g
                     </div>
                   </div>
                 </div>

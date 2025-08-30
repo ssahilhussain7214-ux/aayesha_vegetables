@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { Leaf, Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const location = useLocation();
@@ -15,12 +15,12 @@ const Footer: React.FC = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <Leaf className="h-8 w-8 text-green-400" />
-              <span className="text-xl font-bold">FreshVeg Co.</span>
+              <img src="/image.png" alt="Logo" className="h-8 w-8" />
+              <span className="text-xl font-bold">Ahmedabad Vegetable & Fruit</span>
             </div>
             <p className="text-gray-300 mb-4">
-              Your trusted partner for fresh, high-quality fruits and vegetables. 
-              Delivering excellence since 2020.
+              Your trusted partner for fresh, high-quality fruits and vegetables in Ahmedabad. 
+              Delivering excellence since 2015.
             </p>
           </div>
 
@@ -30,15 +30,15 @@ const Footer: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2 text-gray-300">
                 <Phone className="h-4 w-4" />
-                <span>+44 20 1234 5678</span>
+                <span>+91 79 1234 5678</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-300">
                 <Mail className="h-4 w-4" />
-                <span>info@freshveg.co.uk</span>
+                <span>info@ahmedabadvegetable.com</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-300">
                 <MapPin className="h-4 w-4" />
-                <span>London, United Kingdom</span>
+                <span>Ahmedabad, Gujarat, India</span>
               </div>
             </div>
           </div>
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 FreshVeg Co. All rights reserved.</p>
+          <p>&copy; 2025 Ahmedabad Vegetable & Fruit. All rights reserved.</p>
         </div>
       </div>
     </footer>

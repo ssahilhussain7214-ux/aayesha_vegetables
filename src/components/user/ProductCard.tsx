@@ -31,10 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <p className="text-gray-600 text-sm mb-3 line-clamp-2">
           {product.description}
         </p>
-        <div className="flex items-center justify-between">
-          <div className="text-green-600 font-bold text-lg">
-            £{product.pricePerKg.toFixed(2)}/kg
-          </div>
+        <div className="flex justify-end">
           <Link
             to={`/product/${product.id}`}
             className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200"

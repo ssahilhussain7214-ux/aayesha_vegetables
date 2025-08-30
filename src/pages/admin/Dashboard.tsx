@@ -27,9 +27,7 @@ const Dashboard: React.FC = () => {
   const processingOrders = mockOrders.filter(order => order.status === 'Processing').length;
   const deliveredOrders = mockOrders.filter(order => order.status === 'Delivered').length;
   
-  const todaysRevenue = mockOrders
-    .filter(order => order.date === new Date().toISOString().split('T')[0])
-    .reduce((sum, order) => sum + order.totalAmount, 0);
+  const todaysOrders = mockOrders.filter(order => order.date === new Date().toISOString().split('T')[0]).length;
 
   const recentOrders = mockOrders.slice(0, 5);
 
@@ -56,11 +54,11 @@ const Dashboard: React.FC = () => {
       change: `${newOrders} new orders`
     },
     {
-      title: "Today's Revenue",
-      value: `£${todaysRevenue.toFixed(2)}`,
+      title: "Today's Orders",
+      value: todaysOrders,
       icon: TrendingUp,
       color: 'bg-orange-500',
-      change: '+15% from yesterday'
+      change: '+3 from yesterday'
     }
   ];
 
@@ -183,7 +181,7 @@ const Dashboard: React.FC = () => {
                     <OrderStatusBadge status={order.status} />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                    £{order.totalAmount.toFixed(2)}
+                    {order.items.length} items
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <Link

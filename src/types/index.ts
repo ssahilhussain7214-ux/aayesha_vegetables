@@ -34,10 +34,7 @@ export interface Order {
   items: {
     productName: string;
     weight: number;
-    pricePerKg: number;
-    total: number;
   }[];
-  totalAmount: number;
 }
 
 export interface Client {

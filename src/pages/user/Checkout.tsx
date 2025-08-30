@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard, MapPin, User, Mail, Phone } from 'lucide-react';
+import { ArrowLeft, MapPin, User } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useUser } from '../../context/UserContext';
 
@@ -25,8 +25,6 @@ const Checkout: React.FC = () => {
   }, [isAuthenticated, cartItems, navigate]);
 
   const cartTotal = getCartTotal();
-  const deliveryFee = cartTotal >= 50 ? 0 : 5.99;
-  const totalWithDelivery = cartTotal + deliveryFee;
 
   // Generate mock order details
   const orderNumber = `FV${new Date().getFullYear()}${String(Date.now()).slice(-6)}`;
@@ -57,10 +55,7 @@ const Checkout: React.FC = () => {
       items: cartItems.map(item => ({
         productName: item.product.name,
         weight: item.weight,
-        pricePerKg: item.product.pricePerKg,
-        total: item.product.pricePerKg * (item.weight / 1000)
       })),
-      totalAmount: totalWithDelivery
     };
 
     // Clear cart and redirect to confirmation
@@ -209,10 +204,9 @@ const Checkout: React.FC = () => {
             {/* Place Order Button */}
             <button
               type="submit"
-              className="w-full bg-green-600 text-white py-4 px-6 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-200 font-semibold text-lg flex items-center justify-center"
+              className="w-full bg-green-600 text-white py-4 px-6 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-200 font-semibold text-lg"
             >
-              <CreditCard className="h-5 w-5 mr-2" />
-              Place Order - £{totalWithDelivery.toFixed(2)}
+              Place Order
             </button>
           </form>
         </div>
@@ -220,7 +214,7 @@ const Checkout: React.FC = () => {
         {/* Order Summary */}
         <div>
           <div className="bg-white p-6 rounded-lg shadow-lg sticky top-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Final Bill</h2>
             
             {/* Order Details */}
             <div className="mb-6 p-4 bg-blue-50 rounded-lg">
@@ -241,7 +235,6 @@ const Checkout: React.FC = () => {
             {/* Items */}
             <div className="space-y-3 mb-6">
               {cartItems.map((item) => {
-                const itemTotal = item.product.pricePerKg * (item.weight / 1000);
                 return (
                   <div key={item.product.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
                     <img
@@ -254,42 +247,12 @@ const Checkout: React.FC = () => {
                         {item.product.name}
                       </div>
                       <div className="text-gray-500 text-xs">
-                        {item.weight}g × £{item.product.pricePerKg.toFixed(2)}/kg
+                        {item.weight}g
                       </div>
-                    </div>
-                    <div className="font-semibold text-gray-900">
-                      £{itemTotal.toFixed(2)}
                     </div>
                   </div>
                 );
               })}
-            </div>
-
-            {/* Totals */}
-            <div className="border-t border-gray-200 pt-4 space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Subtotal</span>
-                <span className="font-medium">£{cartTotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">
-                  Delivery {cartTotal >= 50 && <span className="text-green-600">(Free)</span>}
-                </span>
-                <span className="font-medium">
-                  {deliveryFee === 0 ? 'Free' : `£${deliveryFee.toFixed(2)}`}
-                </span>
-              </div>
-              {cartTotal < 50 && (
-                <div className="text-xs text-gray-500">
-                  Free delivery on orders over £50
-                </div>
-              )}
-              <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                <span className="text-lg font-semibold text-gray-900">Total</span>
-                <span className="text-xl font-bold text-green-600">
-                  £{totalWithDelivery.toFixed(2)}
-                </span>
-              </div>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Leaf, Mail, Lock, AlertCircle } from 'lucide-react';
+import { Mail, Lock, AlertCircle } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 
 const AdminLogin: React.FC = () => {
@@ -36,9 +36,9 @@ const AdminLogin: React.FC = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <div className="flex items-center justify-center space-x-2 mb-6">
-            <Leaf className="h-12 w-12 text-green-400" />
+            <img src="/image.png" alt="Logo" className="h-12 w-12" />
             <div>
-              <div className="text-2xl font-bold text-white">FreshVeg Co.</div>
+              <div className="text-2xl font-bold text-white">Ahmedabad Vegetable & Fruit</div>
               <div className="text-sm text-gray-300">Admin Panel</div>
             </div>
           </div>
@@ -108,7 +108,7 @@ const AdminLogin: React.FC = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-500 mb-2">Demo Credentials:</p>
             <p className="text-xs text-gray-600">
-              Email: admin@fruitveg.com<br />
+              Email: admin@ahmedabadvegetable.com<br />
               Password: admin123
             </p>
           </div>

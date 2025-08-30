@@ -8,7 +8,6 @@ import {
   Bell, 
   BarChart3,
   LogOut,
-  Leaf
 } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 
@@ -57,9 +56,9 @@ const AdminSidebar: React.FC = () => {
       {/* Logo */}
       <div className="p-6 border-b border-gray-700">
         <div className="flex items-center space-x-2">
-          <Leaf className="h-8 w-8 text-green-400" />
+          <img src="/image.png" alt="Logo" className="h-8 w-8" />
           <div>
-            <div className="font-bold text-lg">FreshVeg Co.</div>
+            <div className="font-bold text-lg">Ahmedabad Vegetable & Fruit</div>
             <div className="text-sm text-gray-400">Admin Panel</div>
           </div>
         </div>

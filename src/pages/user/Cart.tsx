@@ -87,45 +87,28 @@ const Cart: React.FC = () => {
         {/* Order Summary */}
         <div className="mt-8 lg:mt-0">
           <div className="bg-white p-6 rounded-lg shadow-lg sticky top-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Final Bill</h2>
             
             <div className="space-y-4">
               {cartItems.map((item) => {
-                const itemTotal = item.product.pricePerKg * (item.weight / 1000);
                 return (
                   <div key={item.product.id} className="flex justify-between text-sm">
                     <div className="flex-1 truncate mr-2">
                       <div className="font-medium text-gray-900">{item.product.name}</div>
                       <div className="text-gray-500">{item.weight}g</div>
                     </div>
-                    <div className="font-medium text-gray-900">
-                      £{itemTotal.toFixed(2)}
-                    </div>
                   </div>
                 );
               })}
             </div>
 
-            <div className="border-t border-gray-200 pt-4 mt-6">
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-lg font-semibold text-gray-900">Total</span>
-                <span className="text-2xl font-bold text-green-600">
-                  £{cartTotal.toFixed(2)}
-                </span>
-              </div>
-              
+            <div className="border-t border-gray-200 pt-4 mt-6">              
               <button
                 onClick={() => navigate('/checkout')}
                 className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-200 font-medium"
               >
-                Proceed to Checkout
+                Place Order
               </button>
-            </div>
-
-            <div className="mt-4 text-center">
-              <p className="text-sm text-gray-500">
-                Minimum order value: £10.00
-              </p>
             </div>
           </div>
         </div>

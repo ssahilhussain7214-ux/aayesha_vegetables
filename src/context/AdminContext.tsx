@@ -24,7 +24,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const adminLogin = (email: string, password: string) => {
     // Mock authentication - in real app, this would validate against a backend
-    if (email === 'admin@fruitveg.com' && password === 'admin123') {
+    if (email === 'admin@ahmedabadvegetable.com' && password === 'admin123') {
       setIsAdminAuthenticated(true);
       return true;
     }

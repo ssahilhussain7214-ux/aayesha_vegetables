@@ -17,23 +17,16 @@ export const mockOrders: Order[] = [
       {
         productName: 'Fresh Tomatoes',
         weight: 2500,
-        pricePerKg: 2.50,
-        total: 6.25
       },
       {
         productName: 'Green Lettuce',
         weight: 1000,
-        pricePerKg: 1.80,
-        total: 1.80
       },
       {
         productName: 'Fresh Carrots',
         weight: 3000,
-        pricePerKg: 1.90,
-        total: 5.70
       }
     ],
-    totalAmount: 13.75
   },
   {
     id: 'ord-002',
@@ -51,17 +44,12 @@ export const mockOrders: Order[] = [
       {
         productName: 'Fresh Apples',
         weight: 5000,
-        pricePerKg: 3.50,
-        total: 17.50
       },
       {
         productName: 'Ripe Bananas',
         weight: 4000,
-        pricePerKg: 2.20,
-        total: 8.80
       }
     ],
-    totalAmount: 26.30
   },
   {
     id: 'ord-003',
@@ -79,23 +67,16 @@ export const mockOrders: Order[] = [
       {
         productName: 'Fresh Broccoli',
         weight: 1500,
-        pricePerKg: 2.80,
-        total: 4.20
       },
       {
         productName: 'Fresh Spinach',
         weight: 800,
-        pricePerKg: 3.40,
-        total: 2.72
       },
       {
         productName: 'English Asparagus',
         weight: 500,
-        pricePerKg: 8.90,
-        total: 4.45
       }
     ],
-    totalAmount: 11.37
   },
   {
     id: 'ord-004',
@@ -113,23 +94,16 @@ export const mockOrders: Order[] = [
       {
         productName: 'Fresh Mushrooms',
         weight: 2000,
-        pricePerKg: 4.50,
-        total: 9.00
       },
       {
         productName: 'Fresh Garlic',
         weight: 500,
-        pricePerKg: 4.80,
-        total: 2.40
       },
       {
         productName: 'Fresh Basil',
         weight: 250,
-        pricePerKg: 6.90,
-        total: 1.73
       }
     ],
-    totalAmount: 13.13
   },
   {
     id: 'ord-005',
@@ -147,17 +121,12 @@ export const mockOrders: Order[] = [
       {
         productName: 'Fresh Avocado',
         weight: 1200,
-        pricePerKg: 5.40,
-        total: 6.48
       },
       {
         productName: 'Fresh Kale',
         weight: 800,
-        pricePerKg: 4.10,
-        total: 3.28
       }
     ],
-    totalAmount: 9.76
   },
   {
     id: 'ord-006',
@@ -175,16 +144,11 @@ export const mockOrders: Order[] = [
       {
         productName: 'Fresh Strawberries',
         weight: 1000,
-        pricePerKg: 5.90,
-        total: 5.90
       },
       {
         productName: 'Fresh Blueberries',
         weight: 500,
-        pricePerKg: 8.20,
-        total: 4.10
       }
     ],
-    totalAmount: 10.00
   }
 ];

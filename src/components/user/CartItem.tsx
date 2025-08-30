@@ -42,9 +42,6 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
           <h3 className="font-semibold text-gray-900 truncate">
             {item.product.name}
           </h3>
-          <p className="text-sm text-gray-600">
-            £{item.product.pricePerKg.toFixed(2)}/kg
-          </p>
           <span className="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
             {item.product.category}
           </span>
@@ -79,13 +76,6 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
             >
               <Plus className="h-4 w-4" />
             </button>
-          </div>
-
-          {/* Total Price */}
-          <div className="text-right min-w-[80px]">
-            <div className="font-bold text-green-600">
-              £{total.toFixed(2)}
-            </div>
           </div>
 
           {/* Remove Button */}

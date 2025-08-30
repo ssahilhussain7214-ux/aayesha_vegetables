@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { CheckCircle, Package, Calendar, MapPin, Mail, Phone, ArrowRight } from 'lucide-react';
+import { CheckCircle, Package, Calendar, MapPin, ArrowRight } from 'lucide-react';
 
 const OrderConfirmation: React.FC = () => {
   const location = useLocation();
@@ -49,7 +49,7 @@ const OrderConfirmation: React.FC = () => {
             </div>
             <div className="text-right">
               <div className="text-2xl font-bold text-green-600">
-                £{orderData.totalAmount.toFixed(2)}
+                Order Placed Successfully
               </div>
             </div>
           </div>
@@ -79,14 +79,8 @@ const OrderConfirmation: React.FC = () => {
             <div>
               <h3 className="font-semibold text-gray-900 mb-3">Contact Information</h3>
               <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-                <div className="flex items-center text-gray-600">
-                  <Mail className="h-4 w-4 mr-2" />
-                  {orderData.client.email}
-                </div>
-                <div className="flex items-center text-gray-600">
-                  <Phone className="h-4 w-4 mr-2" />
-                  {orderData.client.phone}
-                </div>
+                <div className="text-gray-600">{orderData.client.email}</div>
+                <div className="text-gray-600">{orderData.client.phone}</div>
               </div>
             </div>
           </div>
@@ -103,11 +97,8 @@ const OrderConfirmation: React.FC = () => {
                   <div className="flex-1">
                     <div className="font-medium text-gray-900">{item.productName}</div>
                     <div className="text-sm text-gray-600">
-                      {item.weight}g × £{item.pricePerKg.toFixed(2)}/kg
+                      {item.weight}g
                     </div>
-                  </div>
-                  <div className="font-semibold text-gray-900">
-                    £{item.total.toFixed(2)}
                   </div>
                 </div>
               ))}
@@ -171,8 +162,8 @@ const OrderConfirmation: React.FC = () => {
       <div className="mt-8 text-center text-gray-600">
         <p className="mb-2">Need help with your order?</p>
         <div className="space-x-6">
-          <span>📧 support@freshveg.co.uk</span>
-          <span>📞 +44 20 1234 5678</span>
+          <span>📧 support@ahmedabadvegetable.com</span>
+          <span>📞 +91 79 1234 5678</span>
         </div>
       </div>
     </div>
