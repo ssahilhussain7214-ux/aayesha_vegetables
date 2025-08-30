@@ -5,13 +5,12 @@ import { mockClients } from '../../data/clients';
 import { products } from '../../data/products';
 
 const Analytics: React.FC = () => {
-  // Mock analytics data calculations
   const totalItemsSold = mockOrders.reduce(
-    (sum, order) => sum + order.items.reduce((itemSum, item) => itemSum + item.weight, 0),
+    (sum, order) =>
+      sum + order.items.reduce((itemSum, item) => itemSum + item.weight, 0),
     0
-  ) / 1000; // Convert to kg
+  ) / 1000;
 
-  // Mock monthly data for charts (no revenue)
   const monthlyData = [
     { month: 'Jan', orders: 45 },
     { month: 'Feb', orders: 52 },
@@ -97,8 +96,8 @@ const Analytics: React.FC = () => {
         </div>
       </div>
 
+      {/* Monthly Orders Chart */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Monthly Orders Chart */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Monthly Orders Trend</h2>
           <div className="space-y-4">
@@ -115,20 +114,21 @@ const Analytics: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="text-sm text-gray-600">{data.orders} orders</div>
-                </div>
+                <div className="text-sm text-gray-600">{data.orders} orders</div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Top Selling Products */}
+        {/* Top Products */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Top Selling Products</h2>
           <div className="space-y-4">
             {topProducts.map((product, index) => (
-              <div key={product.name} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div
+                key={product.name}
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+              >
                 <div className="flex items-center space-x-3">
                   <div className="w-6 h-6 bg-green-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
                     {index + 1}
@@ -144,13 +144,17 @@ const Analytics: React.FC = () => {
         </div>
       </div>
 
+      {/* Clients & Categories */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top Clients */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Top Clients</h2>
           <div className="space-y-4">
             {topClients.map((client, index) => (
-              <div key={client.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div
+                key={client.id}
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+              >
                 <div className="flex items-center space-x-3">
                   <div className="w-6 h-6 bg-blue-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
                     {index + 1}
@@ -161,7 +165,9 @@ const Analytics: React.FC = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-semibold text-gray-900">{client.totalOrders} orders</div>
+                  <div className="font-semibold text-gray-900">
+                    {client.totalOrders} orders
+                  </div>
                   <div className="text-sm text-gray-600">
                     Since {new Date(client.registrationDate).toLocaleDateString('en-GB')}
                   </div>
@@ -173,14 +179,4 @@ const Analytics: React.FC = () => {
 
         {/* Category Performance */}
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Category Performance</h2>
-          <div className="space-y-4">
-            {['Fruits', 'Vegetables', 'English Vegetables'].map((category) => {
-              const categoryProducts = products.filter(p => p.category === category);
-              const percentage = (categoryProducts.length / products.length) * 100;
-
-              return (
-                <div key={category} className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium text-gray-900">{category}</span>
-                   
+          <h2 className="text-xl font-bold
