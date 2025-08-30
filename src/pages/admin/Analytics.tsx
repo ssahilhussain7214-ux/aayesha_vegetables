@@ -1,33 +1,32 @@
 import React from 'react';
-import { TrendingUp, DollarSign, ShoppingBag, Users, Calendar, Package } from 'lucide-react';
+import { ShoppingBag, Users, Package } from 'lucide-react';
 import { mockOrders } from '../../data/orders';
 import { mockClients } from '../../data/clients';
 import { products } from '../../data/products';
 
 const Analytics: React.FC = () => {
   // Mock analytics data calculations
-  const totalRevenue = mockOrders.reduce((sum, order) => sum + order.totalAmount, 0);
-  const avgOrderValue = totalRevenue / mockOrders.length;
-  const totalItemsSold = mockOrders.reduce((sum, order) => 
-    sum + order.items.reduce((itemSum, item) => itemSum + item.weight, 0), 0
+  const totalItemsSold = mockOrders.reduce(
+    (sum, order) => sum + order.items.reduce((itemSum, item) => itemSum + item.weight, 0),
+    0
   ) / 1000; // Convert to kg
 
-  // Mock monthly data for charts
+  // Mock monthly data for charts (no revenue)
   const monthlyData = [
-    { month: 'Jan', orders: 45, revenue: 1250.50 },
-    { month: 'Feb', orders: 52, revenue: 1456.80 },
-    { month: 'Mar', orders: 48, revenue: 1345.20 },
-    { month: 'Apr', orders: 61, revenue: 1678.40 },
-    { month: 'May', orders: 58, revenue: 1589.60 },
-    { month: 'Jun', orders: 65, revenue: 1789.30 }
+    { month: 'Jan', orders: 45 },
+    { month: 'Feb', orders: 52 },
+    { month: 'Mar', orders: 48 },
+    { month: 'Apr', orders: 61 },
+    { month: 'May', orders: 58 },
+    { month: 'Jun', orders: 65 }
   ];
 
   const topProducts = [
-    { name: 'Fresh Tomatoes', sold: '245kg', revenue: '£612.50' },
-    { name: 'Fresh Apples', sold: '189kg', revenue: '£661.50' },
-    { name: 'Fresh Carrots', sold: '167kg', revenue: '£317.30' },
-    { name: 'Green Lettuce', sold: '134kg', revenue: '£241.20' },
-    { name: 'Fresh Potatoes', sold: '298kg', revenue: '£417.20' }
+    { name: 'Fresh Tomatoes', sold: '245kg' },
+    { name: 'Fresh Apples', sold: '189kg' },
+    { name: 'Fresh Carrots', sold: '167kg' },
+    { name: 'Green Lettuce', sold: '134kg' },
+    { name: 'Fresh Potatoes', sold: '298kg' }
   ];
 
   const topClients = mockClients
@@ -48,12 +47,12 @@ const Analytics: React.FC = () => {
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Total Revenue</p>
-              <p className="text-2xl font-bold text-green-600">£{totalRevenue.toFixed(2)}</p>
+              <p className="text-sm text-gray-600">Total Orders</p>
+              <p className="text-2xl font-bold text-green-600">{mockOrders.length}</p>
               <p className="text-xs text-green-600 mt-1">+12.5% vs last month</p>
             </div>
             <div className="p-3 bg-green-100 rounded-lg">
-              <DollarSign className="h-6 w-6 text-green-600" />
+              <ShoppingBag className="h-6 w-6 text-green-600" />
             </div>
           </div>
         </div>
@@ -61,12 +60,12 @@ const Analytics: React.FC = () => {
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Total Orders</p>
-              <p className="text-2xl font-bold text-blue-600">{mockOrders.length}</p>
+              <p className="text-sm text-gray-600">Active Clients</p>
+              <p className="text-2xl font-bold text-blue-600">{mockClients.length}</p>
               <p className="text-xs text-blue-600 mt-1">+8.2% vs last month</p>
             </div>
             <div className="p-3 bg-blue-100 rounded-lg">
-              <ShoppingBag className="h-6 w-6 text-blue-600" />
+              <Users className="h-6 w-6 text-blue-600" />
             </div>
           </div>
         </div>
@@ -74,12 +73,12 @@ const Analytics: React.FC = () => {
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Avg. Order Value</p>
-              <p className="text-2xl font-bold text-purple-600">£{avgOrderValue.toFixed(2)}</p>
+              <p className="text-sm text-gray-600">Products Available</p>
+              <p className="text-2xl font-bold text-purple-600">{products.length}</p>
               <p className="text-xs text-purple-600 mt-1">+3.8% vs last month</p>
             </div>
             <div className="p-3 bg-purple-100 rounded-lg">
-              <TrendingUp className="h-6 w-6 text-purple-600" />
+              <Package className="h-6 w-6 text-purple-600" />
             </div>
           </div>
         </div>
@@ -99,11 +98,11 @@ const Analytics: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Monthly Revenue Chart (Mock) */}
+        {/* Monthly Orders Chart */}
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Monthly Revenue Trend</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Monthly Orders Trend</h2>
           <div className="space-y-4">
-            {monthlyData.map((data, index) => (
+            {monthlyData.map((data) => (
               <div key={data.month} className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 text-sm font-medium text-gray-600">{data.month}</div>
@@ -111,13 +110,12 @@ const Analytics: React.FC = () => {
                     <div className="bg-gray-200 rounded-full h-4 w-32">
                       <div
                         className="bg-green-600 h-4 rounded-full transition-all duration-500"
-                        style={{ width: `${(data.revenue / 2000) * 100}%` }}
+                        style={{ width: `${(data.orders / 70) * 100}%` }}
                       ></div>
                     </div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-semibold text-gray-900">£{data.revenue.toFixed(2)}</div>
                   <div className="text-sm text-gray-600">{data.orders} orders</div>
                 </div>
               </div>
@@ -125,7 +123,7 @@ const Analytics: React.FC = () => {
           </div>
         </div>
 
-        {/* Top Products */}
+        {/* Top Selling Products */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Top Selling Products</h2>
           <div className="space-y-4">
@@ -139,9 +137,6 @@ const Analytics: React.FC = () => {
                     <div className="font-medium text-gray-900">{product.name}</div>
                     <div className="text-sm text-gray-600">{product.sold} sold</div>
                   </div>
-                </div>
-                <div className="text-right">
-                  <div className="font-semibold text-gray-900">{product.revenue}</div>
                 </div>
               </div>
             ))}
@@ -180,31 +175,12 @@ const Analytics: React.FC = () => {
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Category Performance</h2>
           <div className="space-y-4">
-            {['Fruits', 'Vegetables', 'English Vegetables'].map((category, index) => {
+            {['Fruits', 'Vegetables', 'English Vegetables'].map((category) => {
               const categoryProducts = products.filter(p => p.category === category);
               const percentage = (categoryProducts.length / products.length) * 100;
-              
+
               return (
                 <div key={category} className="space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="font-medium text-gray-900">{category}</span>
-                    <span className="text-sm text-gray-600">{categoryProducts.length} products</span>
-                  </div>
-                  <div className="bg-gray-200 rounded-full h-3">
-                    <div
-                      className="bg-gradient-to-r from-green-500 to-blue-600 h-3 rounded-full transition-all duration-500"
-                      style={{ width: `${percentage}%` }}
-                    ></div>
-                  </div>
-                  <div className="text-xs text-gray-500">{percentage.toFixed(1)}% of total inventory</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Analytics;
+                   
